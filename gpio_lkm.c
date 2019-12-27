@@ -15,8 +15,6 @@ static unsigned int number = 0;
 module_param(number, uint, 0660);
 MODULE_PARM_DESC(number, "Number on segdisplay (default=0)");
 
-static unsigned int gpios[] = {5, 6, 13, 26, 12, 16, 25};
-
 int set_number(char num){
 	if (num == 0){
 		gpio_set_value(5, 1);
