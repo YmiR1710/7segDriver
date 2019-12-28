@@ -15,7 +15,8 @@ static unsigned int number = 0;
 module_param(number, uint, 0660);
 MODULE_PARM_DESC(number, "Number on segdisplay (default=0)");
 
-int set_number(char num){
+int set_number(char n){
+	int num = num - '0';
 	if (num == 0){
 		gpio_set_value(5, 1);
 		gpio_set_value(6, 1);
