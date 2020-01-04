@@ -12,6 +12,7 @@ MODULE_DESCRIPTION("A simple Linux driver for 7seg");
 MODULE_VERSION("0.1");
 
 static unsigned int number = 0;
+static unsigned int pins[7] = {5, 6, 13, 26, 12, 16, 25};
 module_param(number, uint, 0660);
 MODULE_PARM_DESC(number, "Number on segdisplay (default=0)");
 
@@ -139,7 +140,14 @@ static struct kobject *ebb_kobj;
 
 static int __init ebbLED_init(void){
     int result = 0;
+    int i = 0;
     printk(KERN_INFO "Work started\n");
+    for (i=0; i<7; i++){
+    	gpio_request(pins[i], "sysfs");
+	gpio_direction_output(pins[i], 1);
+	gpio_set_value(pins[i], 1);
+	gpio_export(pins[i], false);
+    }
     ebb_kobj = kobject_create_and_add("segdisplay", kernel_kobj->parent);
     if(!ebb_kobj){
 			return -ENOMEM;
